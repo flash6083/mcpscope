@@ -6,7 +6,7 @@
   "bin": {
     "mcpscope": "./dist/cli.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": ["dist", "README.md", "GETTING_STARTED.md", "ARCHITECTURE.md", "CHANGELOG.md", "LICENSE"],
   "scripts": {
     "build": "tsup src/cli.ts --format esm --clean --out-dir dist --loader .sql=text && vite build --config src/dashboard/vite.config.ts",
     "build:dashboard": "vite build --config src/dashboard/vite.config.ts",
@@ -17,12 +17,6 @@
     "typecheck": "tsc --noEmit",
     "prepack": "pnpm build"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/user/mcpscope.git"
-  },
-  "bugs": "https://github.com/user/mcpscope/issues",
-  "homepage": "https://github.com/user/mcpscope#readme",
   "keywords": [
     "mcp",
     "model-context-protocol",
@@ -69,5 +63,8 @@
   "engines": {
     "node": ">=22"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  }
 }

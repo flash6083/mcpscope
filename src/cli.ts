@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { Command } from "commander";
 import { dashboardCommand } from "./commands/dashboard.js";
 import { wrapCommand } from "./commands/wrap.js";

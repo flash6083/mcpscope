@@ -15,9 +15,8 @@
 | **Error tracking** | Classify failures as `jsonrpc_error` or `tool_error` with full payload context |
 | **Trace correlation** | Propagate W3C trace context through MCP to correlate with downstream services |
 | **OTLP export** | Ship spans to Jaeger, Tempo, Datadog, or any OpenTelemetry backend |
-| **Replay & testing** | (Planned) Re-execute tool calls with edited parameters for regression testing |
 
-## 3. Novelty Factor
+## 3. Positioning
 
 Unlike existing tools:
 
@@ -26,7 +25,8 @@ Unlike existing tools:
 - **Sentry / Datadog** are SaaS-bound and require code changes. `mcpscope` is local-first, zero-config, and open-source.
 - **Bifrost / Portkey** are enterprise gateways with auth overhead. `mcpscope` is a lightweight single-binary CLI.
 
-The key innovation is **transparent stdio interception** combined with **OpenTelemetry semantic conventions** specifically for MCP — no other tool bridges these two worlds.
+The project combines transparent MCP interception, local SQLite history, and
+OpenTelemetry-style span data in one developer-focused workflow.
 
 ## 4. High-Level Architecture
 
@@ -52,7 +52,7 @@ The key innovation is **transparent stdio interception** combined with **OpenTel
 │  └─────────────────┘    └─────────────────┘    └───────────────┘  │
 └─────────────────────────────────────────────────────────────────────┘
         │                       │
-        │ stdio                 │ HTTP (port 7878)
+        │ stdio                 │ HTTP (port 7878 or 8989)
         ▼                       ▼
 ┌─────────────────┐    ┌──────────────────────────────────────────┐
 │ Upstream MCP    │    │ Dashboard (Fastify + React)               │
@@ -224,7 +224,8 @@ Stdout is the MCP wire. Any write to stdout (including `console.log` or unsuppre
 
 ## 10. Security & Privacy
 
-- **No network by default**: The proxy only listens on `localhost:7878`. No external exposure.
+- **Local-first**: The proxy and dashboard bind to `127.0.0.1` by default.
+  Binding to a non-loopback interface is not a secure multi-user deployment.
 - **Opt-in payload capture**: Bodies are not stored unless `MCPSCOPE_CAPTURE_PAYLOADS` is set.
 - **No auth**: Localhost-only. If you need auth, put it behind a reverse proxy.
 - **Secrets**: No API keys, tokens, or credentials are logged. If payload capture is enabled, they may appear in the database — treat `~/.mcpscope/` as sensitive.
@@ -234,7 +235,7 @@ Stdout is the MCP wire. Any write to stdout (including `console.log` or unsuppre
 - **npm package**: `mcpscope` (single binary + bundled dashboard)
 - **Install**: `npm install -g mcpscope` or `npx mcpscope@latest`
 - **Files shipped**: `dist/cli.js`, `dist/assets/`, `README.md`, `LICENSE`
-- **Bin**: `dist/cli.js` with shebang `#!/usr/bin/env node`
+- **Bin**: `dist/cli.js` with a Node.js shebang
 
 ## 12. Comparison with Alternatives
 
@@ -256,7 +257,6 @@ Stdout is the MCP wire. Any write to stdout (including `console.log` or unsuppre
 
 ### Next
 - [ ] `wrap-http` transport (Streamable HTTP)
-- [ ] Replay endpoint (`POST /api/replay/:span_id`)
 - [ ] `BatchSpanProcessor` for async export
 - [ ] SSE event emission from SQLite exporter
 - [ ] shadcn/ui components + dark mode

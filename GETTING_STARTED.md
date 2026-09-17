@@ -205,8 +205,10 @@ mcpscope/
 **"Cannot find module 'better-sqlite3'"**
 Run `pnpm rebuild better-sqlite3` to rebuild the native binary for your platform.
 
-**Port 7878 already in use**
-Set a different port by editing `src/commands/wrap.ts` or `src/commands/dashboard.ts`.
+**Port already in use**
+Stop the process currently using the port, or use the `--port` option for
+`wrap-http`. The stdio wrapper and standalone dashboard currently use port
+7878.
 
 **Dashboard shows "not built"**
 Run `pnpm exec vite build --config src/dashboard/vite.config.ts` first.

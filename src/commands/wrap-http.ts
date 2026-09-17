@@ -12,7 +12,7 @@ export async function wrapHttpCommand(upstreamUrl: string, port: number) {
   registerHttpProxy(app, upstreamUrl, sessionId);
 
   try {
-    await app.listen({ port, host: "0.0.0.0" });
+    await app.listen({ port, host: "127.0.0.1" });
     logger.info({ upstreamUrl, port }, "HTTP MCP proxy listening");
   } catch (error) {
     shutdownTracer();
