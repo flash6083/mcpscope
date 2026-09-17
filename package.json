@@ -1,0 +1,73 @@
+{
+  "name": "mcpscope",
+  "version": "0.1.0",
+  "description": "Observability proxy for Model Context Protocol",
+  "type": "module",
+  "bin": {
+    "mcpscope": "./dist/cli.js"
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup src/cli.ts --format esm --clean --out-dir dist --loader .sql=text && vite build --config src/dashboard/vite.config.ts",
+    "build:dashboard": "vite build --config src/dashboard/vite.config.ts",
+    "dev": "vite --config src/dashboard/vite.config.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "biome check src/",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/user/mcpscope.git"
+  },
+  "bugs": "https://github.com/user/mcpscope/issues",
+  "homepage": "https://github.com/user/mcpscope#readme",
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "opentelemetry",
+    "observability",
+    "tracing",
+    "opentelemetry-tracing"
+  ],
+  "dependencies": {
+    "@fastify/cors": "^11.3.0",
+    "@modelcontextprotocol/sdk": "latest",
+    "@opentelemetry/api": "latest",
+    "@opentelemetry/exporter-trace-otlp-http": "latest",
+    "@opentelemetry/resources": "latest",
+    "@opentelemetry/sdk-node": "^0.221.0",
+    "@opentelemetry/sdk-trace": "^2.10.0",
+    "@opentelemetry/sdk-trace-base": "^2.10.0",
+    "@opentelemetry/semantic-conventions": "latest",
+    "better-sqlite3": "latest",
+    "commander": "latest",
+    "fastify": "latest",
+    "pino": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "latest",
+    "@tailwindcss/vite": "latest",
+    "@tanstack/react-table": "latest",
+    "@types/better-sqlite3": "latest",
+    "@types/node": "latest",
+    "@vitejs/plugin-react": "latest",
+    "class-variance-authority": "latest",
+    "clsx": "latest",
+    "lucide-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "tailwind-merge": "latest",
+    "tailwindcss": "latest",
+    "tsup": "latest",
+    "typescript": "5.7.3",
+    "vite": "latest",
+    "vitest": "latest"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "license": "MIT"
+}
